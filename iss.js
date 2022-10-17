@@ -30,6 +30,11 @@ const fetchMyIP = (callback) => {
   });
 };
 
+const fetchCoordsByIP = (str, cb) => {
 
+};
 
-module.exports = { fetchMyIP };
+module.exports = {
+  fetchMyIP,
+  fetchCoordsByIP
+};
