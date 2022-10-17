@@ -30,8 +30,25 @@ const fetchMyIP = (callback) => {
   });
 };
 
-const fetchCoordsByIP = (str, cb) => {
+const fetchCoordsByIP = (ip, cb) => {
+  request(`http://ipwho.is/${ip}`, (error, response, body) => {
+    // error can be set if invalid domain, user is offline, etc.
+    if (error) return cb(error, null);
 
+    // if non-200 status, assume server error
+    const parsedBdy = JSON.parse(body);
+    if (!parsedBdy.success) {
+      const msg = `Success status was false. Server message says: ${parsedBdy.message} when fetching IP ${ip}`;
+      cb(Error(msg), null);
+      return;
+    }
+
+    // All is good, process and pass data along
+    const coords = {};
+    coords.latitude = parsedBdy.latitude;
+    coords.longitude = parsedBdy.longitude;
+    cb(null, coords);
+  });
 };
 
 module.exports = {
