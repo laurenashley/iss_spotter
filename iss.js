@@ -15,10 +15,7 @@ const fetchMyIP = (callback) => {
   // use request to fetch IP address from JSON API
   request(`https://api.ipify.org/?format=json`, (error, response, body) => {
     // error can be set if invalid domain, user is offline, etc.
-    if (error) {
-      callback(error, null);
-      return;
-    }
+    if (error) return callback(error, null);
 
     // if non-200 status, assume server error
     if (response.statusCode !== 200) {
@@ -30,7 +27,6 @@ const fetchMyIP = (callback) => {
     // All is good, pass the data along
     const ip = JSON.parse(body).ip;
     callback(error, ip);
-
   });
 };
 
