@@ -44,10 +44,8 @@ const fetchCoordsByIP = (ip, cb) => {
     }
 
     // All is good, process and pass data along
-    const coords = {};
-    coords.latitude = parsedBdy.latitude;
-    coords.longitude = parsedBdy.longitude;
-    cb(null, coords);
+    const { latitude, longitude } = parsedBdy;
+    cb(null, {latitude, longitude});
   });
 };
 
