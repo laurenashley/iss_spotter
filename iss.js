@@ -14,7 +14,8 @@ const request = require('request');
  */
 
 const fetchISSFlyOverTimes = (coords, cb) => {
-  request(`https://iss-flyover.herokuapp.com/json/?lat=${coords.latitude}&lon=${coords.longitude}`, (error, response, body) => {
+  const url = `https://iss-flyover.herokuapp.com/json/?lat=${coords.latitude}&lon=${coords.longitude}`;
+  request(url, (error, response, body) => {
     // error can be set if invalid domain, user is offline, etc.
     if (error) return cb(error, null);
 
@@ -26,8 +27,8 @@ const fetchISSFlyOverTimes = (coords, cb) => {
     }
 
     // All is good, process and pass data along
-    const parsedBdy = JSON.parse(body);
-    cb(null, parsedBdy.response);
+    const passes = JSON.parse(body).response;
+    cb(null, passes);
   });
 };
 
